@@ -1,4 +1,4 @@
-name : Deploy to GitHub Pages
+name: Deploy to GitHub Pages
 
 on:
   push:
@@ -6,30 +6,17 @@ on:
       - main
 
 jobs:
-  deploy:
+  build-and-deploy:
     runs-on: ubuntu-latest
 
     steps:
-    
-    - name: Check out the code
-      uses: actions/checkout@v3
-      
-    - name: Set up Git
-      run: |
-        git config --global user.name "aadilsnovasys"
-        git config --global user.email "aadilraza@snovasys.com"
+      # Check out the repository
+      - name: Check out code
+        uses: actions/checkout@v3
 
-    - name: Create or Checkout Github Pages
-      run: |
-        git checkout --orphan gh-pages
-
-    - name: Copy files to gh-pages branch
-      run: |
-        cp -r * ./
-
-    - name: Commit and Push to Github Pages
-      run: |
-        git add --all
-        git commit -m "Deploy to Github Pages"
-        git push --force --set-upstream origin gh-pages
-        
+      # Deploy to GitHub Pages
+      - name: Deploy to GitHub Pages
+        uses: peaceiris/actions-gh-pages@v3
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: ./  # Adjust to output directory if using a build step (e.g., `dist/`)
