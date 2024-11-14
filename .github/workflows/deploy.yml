@@ -29,8 +29,8 @@ jobs:
 
     - name: Copy files to gh-pages branch
       run: |
-        cp index.html ./  # Copy index.html to the root of the gh-pages branch
-        cp style.css ./  # Copy style.css to the root of the gh-pages branch
+        cp workweb/index.html ./  # Copy index.html to the root of the gh-pages branch
+        cp workweb/style.css ./  # Copy style.css to the root of the gh-pages branch
 
     - name: Commit and Push to GitHub Pages
       run: |
