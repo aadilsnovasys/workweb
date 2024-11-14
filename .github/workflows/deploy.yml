@@ -1,36 +1,39 @@
-name : Deploy to GitHub Pages
+name: Deploy to GitHub Pages
 
 on:
   push:
     branches:
-      - main
+      - main  # Trigger on push to the main branch
 
 jobs:
   deploy:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-latest  # Run on Ubuntu
 
     steps:
-    
-    - name: Check out the code
-      uses: actions/checkout@v3
-      
+    - name: Check out code
+      uses: actions/checkout@v3  # Checkout the repository code
+
+    - name: List files to confirm file locations
+      run: |
+        ls -la  # List all files in the current directory to confirm index.html and style.css are present
+
     - name: Set up Git
       run: |
         git config --global user.name "aadilsnovasys"
         git config --global user.email "aadilraza@snovasys.com"
 
-    - name: Create or Checkout Github Pages
+    - name: Create or Checkout GitHub Pages branch
       run: |
-        git checkout --orphan gh-pages
-        git rm -rf .
+        git checkout --orphan gh-pages  # Creates a new branch (gh-pages) with no history
+        git rm -rf .  # Remove everything from the working directory
 
     - name: Copy files to gh-pages branch
       run: |
-        cp -r * ./
+        cp index.html ./  # Copy index.html to the root of the gh-pages branch
+        cp style.css ./  # Copy style.css to the root of the gh-pages branch
 
-    - name: Commit and Push to Github Pages
+    - name: Commit and Push to GitHub Pages
       run: |
-        git add --all
-        git commit -m "Deploy to Github Pages"
-        git push --force --set-upstream origin gh-pages
-        
+        git add --all  # Add all files to staging
+        git commit -m "Deploy to GitHub Pages"  # Commit the files
+        git push --force --set-upstream origin gh-pages  # Push to the gh-pages branch
